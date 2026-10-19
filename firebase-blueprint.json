@@ -1,0 +1,87 @@
+{
+  "entities": {
+    "Siswa": {
+      "title": "Siswa",
+      "description": "Data peserta didik SMK dan kredensial ujian CBT",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nisn": { "type": "string" },
+        "name": { "type": "string" },
+        "classRoom": { "type": "string" },
+        "major": { "type": "string" },
+        "financialStatus": { "type": "string", "enum": ["LUNAS", "DISPENSASI", "BELUM_LUNAS"] },
+        "password": { "type": "string" },
+        "status": { "type": "string", "enum": ["BELUM_MULAI", "SEDANG_MENGERJAKAN", "SELESAI", "TERINDIKASI_CURANG", "DIBLOKIR"] },
+        "score": { "type": "number" },
+        "violationCount": { "type": "number" }
+      },
+      "required": ["id", "nisn", "name", "financialStatus", "password", "status"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "Butir soal CBT SMK dengan pilihan ganda atau esai kata kunci",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "code": { "type": "string" },
+        "subject": { "type": "string" },
+        "competencyStandard": { "type": "string" },
+        "indicator": { "type": "string" },
+        "type": { "type": "string", "enum": ["PG", "ESSAI"] },
+        "difficulty": { "type": "string", "enum": ["MUDAH", "SEDANG", "SUKAR"] },
+        "questionText": { "type": "string" },
+        "maxScore": { "type": "number" }
+      },
+      "required": ["id", "code", "subject", "competencyStandard", "indicator", "type", "difficulty", "questionText", "maxScore"]
+    },
+    "ExamIncident": {
+      "title": "ExamIncident",
+      "description": "Insiden pelanggaran anti-kecurangan real-time peserta",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" },
+        "severity": { "type": "string", "enum": ["WARNING", "CRITICAL"] }
+      },
+      "required": ["id", "studentId", "studentName", "type", "description", "severity"]
+    },
+    "BeritaAcara": {
+      "title": "BeritaAcara",
+      "description": "Berita acara resmi dan absensi pengawasan ujian CBT",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "examId": { "type": "string" },
+        "schoolName": { "type": "string" },
+        "date": { "type": "string" },
+        "proctorName": { "type": "string" },
+        "proctorNip": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "examId", "schoolName", "date", "proctorName"]
+    }
+  },
+  "firestore": {
+    "/students/{studentId}": {
+      "schema": { "$ref": "#/entities/Siswa" },
+      "description": "Koleksi data peserta ujian SMK"
+    },
+    "/questions/{questionId}": {
+      "schema": { "$ref": "#/entities/Question" },
+      "description": "Koleksi bank butir soal CBT SMK"
+    },
+    "/incidents/{incidentId}": {
+      "schema": { "$ref": "#/entities/ExamIncident" },
+      "description": "Koleksi insiden pelanggaran anti-kecurangan real-time"
+    },
+    "/beritaAcara/{beritaAcaraId}": {
+      "schema": { "$ref": "#/entities/BeritaAcara" },
+      "description": "Dokumen berita acara dan absensi ujian"
+    }
+  }
+}

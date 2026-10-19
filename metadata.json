@@ -1,0 +1,8 @@
+{
+  "name": "CBT SMK Mandiri - Sistem Ujian & Anti-Kecurangan",
+  "description": "Aplikasi CBT untuk SMK dengan pengawasan anti-kecurangan real-time, bank soal terintegrasi, kisi-kisi dinamis, koreksi esai otomatis, validasi keuangan, kartu ujian barcode, dan analitik nilai mendalam.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
